@@ -49,6 +49,7 @@ Before contributing to SmartGreen, please read the following documents to unders
 
 Project documentation is maintained in the `docs/` directory.
 
+- [Digital Twins for Greenhouses](docs/Digital_Twins_for_Greenhouses.pdf) — Project onboarding and architecture guide (hardware, data stack, and AI roadmap).
 - `docs/team-guidelines/` — team processes, conventions, and collaboration rules
 - [YouTrack Instances](docs/admin/youtrack-instances.md) — For admins: the five per-team YouTrack servers and how to connect Claude Code to them
 
