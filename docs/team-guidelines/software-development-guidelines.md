@@ -141,8 +141,10 @@ merged:
 Both branches cannot be deleted or force-pushed, and team members cannot
 push to them directly. The only exception is the repository
 administrator, who can bypass these rules when needed (for example, to
-update the team documentation directly). If a check fails, open its log
-on the PR: it explains what is wrong and how to fix it.
+update the team documentation directly). Deletion is the one rule that
+nobody can bypass, not even the administrator: the ruleset
+`Prevent deletion of dev and main` has no bypass. If a check fails,
+open its log on the PR: it explains what is wrong and how to fix it.
 
 Every PR also gets the label of its team (`team-1` to `team-5`),
 read from the branch name. To see the open PRs of a team, filter
