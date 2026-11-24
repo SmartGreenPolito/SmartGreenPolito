@@ -139,6 +139,12 @@ administrator, who can bypass these rules when needed (for example, to
 update the team documentation directly). If a check fails, open its log
 on the PR: it explains what is wrong and how to fix it.
 
+Every PR also gets the label of its team (`team-1` to `team-5`),
+read from the branch name. To see the open PRs of a team, filter
+the pull requests with `is:pr is:open label:team-2`. The label is
+added by [`.github/workflows/team-labels.yml`](../../.github/workflows/team-labels.yml),
+with the rules in [`.github/labeler.yml`](../../.github/labeler.yml).
+
 The checks are defined in
 [`.github/workflows/branch-flow.yml`](../../.github/workflows/branch-flow.yml).
 The rules are kept as code in [`.github/rulesets`](../../.github/rulesets)

@@ -1,0 +1,25 @@
+# This workflow adds the team label (team-1 ... team-5) to every Pull Request,
+# reading the team from the branch name. The rules are in .github/labeler.yml.
+#
+# Branch names are validated by branch-flow.yml, so this workflow only adds labels
+# and is not a required check.
+#
+# It runs on "pull_request_target": the workflow and .github/labeler.yml are read from
+# the base branch, and the code of the Pull Request is never checked out or run.
+
+name: Team Labels
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  label:
+    name: Add team label
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/labeler@v7
