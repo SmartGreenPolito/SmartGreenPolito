@@ -1,8 +1,10 @@
 # User Story Dependencies — Sprint 1
 
+Sprint 1 runs from **25 November 2026** to **22 December 2026** (four weeks).
+
 An arrow `A → B` means **B depends on A**: A must be done (or at least its interface agreed) before B can be completed.
 Solid arrows are hard dependencies; dashed arrows are soft ones (B is more useful with A, but can be built without it).
-Transitive edges are omitted (e.g. US-04 depends on US-01 through US-02).
+Transitive hard edges are omitted (e.g. US-04 depends on US-01 through US-02).
 
 ```mermaid
 flowchart LR
@@ -32,6 +34,15 @@ flowchart LR
     US11["US-11<br/>Read Actuator State"]
     US12["US-12<br/>Record Actuator<br/>State Changes"]
 
+    %% Epic 7 — ML Data Pipeline
+    US15["US-15<br/>Define the Data<br/>Requirements of the<br/>ML Models"]
+    US17["US-17<br/>Build a Training-Ready<br/>Dataset"]
+
+    %% Epic 8 — Greenhouse Climate Model
+    US16["US-16<br/>Set Up the GreenLight<br/>Climate Model"]
+    US18["US-18<br/>Evaluate Climate<br/>Forecasts"]
+    US19["US-19<br/>Calibrate the<br/>Climate Model"]
+
     US01 --> US02
     US01 --> US03
     US01 --> US13
@@ -56,12 +67,27 @@ flowchart LR
     US06 --> US08
     US08 --> US09
 
+    US06 -.-> US15
+    US07 -.-> US15
+    US12 -.-> US15
+    US15 --> US16
+    US15 --> US17
+    US16 -.-> US17
+    US09 -.-> US17
+    US12 -.-> US17
+    US17 --> US18
+    US16 -.-> US18
+    US16 --> US19
+    US18 --> US19
+
     classDef config fill:#dbeafe,stroke:#1d4ed8,color:#000
     classDef mcu fill:#ede9fe,stroke:#6d28d9,color:#000
     classDef acq fill:#dcfce7,stroke:#15803d,color:#000
     classDef data fill:#fef9c3,stroke:#a16207,color:#000
     classDef retr fill:#ffedd5,stroke:#c2410c,color:#000
     classDef act fill:#fee2e2,stroke:#b91c1c,color:#000
+    classDef mldata fill:#ccfbf1,stroke:#0f766e,color:#000
+    classDef climate fill:#fce7f3,stroke:#be185d,color:#000
 
     class US01,US02,US03 config
     class US13,US14 mcu
@@ -69,9 +95,11 @@ flowchart LR
     class US06,US07 data
     class US08,US09 retr
     class US10,US11,US12 act
+    class US15,US17 mldata
+    class US16,US18,US19 climate
 ```
 
-Colours: blue = Epic 1 Configuration · purple = Epic 6 Microcontroller · green = Epic 2 Acquisition · yellow = Epic 3 Dataset · orange = Epic 4 Retrieval · red = Epic 5 Actuators.
+Colours: blue = Epic 1 Configuration · purple = Epic 6 Microcontroller · green = Epic 2 Acquisition · yellow = Epic 3 Dataset · orange = Epic 4 Retrieval · red = Epic 5 Actuators · teal = Epic 7 ML Data Pipeline · pink = Epic 8 Greenhouse Climate Model.
 
 ## Dependencies and rationale
 
@@ -91,6 +119,11 @@ Colours: blue = Epic 1 Configuration · purple = Epic 6 Microcontroller · green
 | US-12 | US-10, US-06 (soft: US-11) | State changes come from US-10 and are written to the same dataset as US-06; US-11 lets the record reflect the state actually detected. |
 | US-08 | US-06 | History can only be retrieved once measurements are stored. |
 | US-09 | US-08 | Multi-sensor retrieval generalises single-sensor retrieval. |
+| US-15 | soft: US-06, US-07, US-12 | The ML data requirements must match the measurement record, the way invalid readings are marked, and the actuator event record. Only the formats are needed, not working code. |
+| US-16 | US-15 | The simulation output must follow the agreed data format. |
+| US-17 | US-15 (soft: US-16, US-09, US-12) | The pipeline reads the agreed format. It is first built on simulated data (US-16) and later fed with real data through US-09 and the actuator events of US-12. |
+| US-18 | US-17 (soft: US-16) | Forecasts are evaluated on the test period of the prepared dataset; the GreenLight model is the first model to evaluate. |
+| US-19 | US-16, US-18 | Calibration adjusts the GreenLight parameters and is judged by the forecast error measured with US-18. |
 
 ## What the graph tells us
 
@@ -99,24 +132,25 @@ Colours: blue = Epic 1 Configuration · purple = Epic 6 Microcontroller · green
 
   | Step | Stories |
   |---|---|
-  | 1 | US-01 |
-  | 2 | US-02, US-03, US-13 |
-  | 3 | US-14 |
-  | 4 | US-04, US-10, US-11 |
-  | 5 | US-07 |
+  | 1 | US-01, US-15 |
+  | 2 | US-02, US-03, US-13, US-16 |
+  | 3 | US-14, US-17 |
+  | 4 | US-04, US-10, US-11, US-18 |
+  | 5 | US-07, US-19 |
   | 6 | US-06 |
   | 7 | US-05, US-08, US-12 |
   | 8 | US-09 |
 
+- **The ML stories (US-15 to US-19) have only soft dependencies on the rest of the backlog.** They are developed on data simulated with GreenLight and switch to real data when the Digital Shadow (see the *Digital Twins for Greenhouses* architecture guide) has collected enough history.
 - **Differences from the suggested order in `user_stories_sprint1.md`:**
   - US-13 does not need US-14, so it can start alongside US-02/US-03 instead of after the mapping.
   - The actuator branch (US-10, US-11) only needs US-13 and US-14, so it can be developed in parallel with the sensor branch rather than after US-05.
   - US-08 and US-09 depend only on storage (US-06) and can start before the actuator stories are finished.
-- **Hub stories:** US-13, US-14 and US-06 each unblock three or more stories; their interfaces (communication API, port-mapping model, dataset record format) should be agreed early.
+- **Hub stories:** US-13, US-14 and US-06 each unblock three or more stories; their interfaces (communication API, port-mapping model, dataset record format) should be agreed early. US-06 and US-12 also define the record formats the ML models are trained on.
 
 ## Team assignment
 
-Stories are grouped so that each team owns a connected part of the graph: 12 of the 20 dependencies stay inside one team, and only 8 cross team boundaries.
+Stories are grouped so that each team owns a connected part of the graph: 19 of the 32 dependencies stay inside one team. Of the 13 that cross team boundaries, the 5 that reach Team 5 are all soft.
 
 The effort column uses rough story points (Fibonacci scale), only to balance the load; each team re-estimates its stories when it splits them into tasks.
 
@@ -126,11 +160,13 @@ The effort column uses rough story points (Fibonacci scale), only to balance the
 | team-2 | Microcontroller and sensor reading | US-13 (8), US-04 (5), US-07 (5) | 18 |
 | team-3 | Dataset: storage, acquisition, retrieval | US-06 (5), US-05 (3), US-08 (5), US-09 (3) | 16 |
 | team-4 | Actuator control | US-10 (5), US-11 (3), US-12 (3) | 11 |
+| team-5 | AI: ML data pipeline and climate model | US-15 (2), US-16 (5), US-17 (5), US-18 (3), US-19 (5) | 20 |
 
-The loads differ on purpose. Team 1 and Team 2 can start on day one. Team 3 and Team 4 depend on other teams' work, so they get less or simpler work to make up for the waiting:
+The loads differ on purpose. Team 1, Team 2 and Team 5 can start on day one. Team 3 and Team 4 depend on other teams' work, so they get less or simpler work to make up for the waiting:
 
 - **Team 3** can start US-06 on the agreed record format (the example record) before US-07 is finished.
 - **Team 4** cannot test against hardware until US-13 and US-14 are done, so it has the smallest load.
+- **Team 5** works only on AI and Machine Learning. Its load is the highest because it is never blocked; if it turns out to be too much, US-19 is the first story to move to the next sprint.
 
 ### Cross-team dependencies
 
@@ -142,3 +178,9 @@ The loads differ on purpose. Team 1 and Team 2 can start on day one. Team 3 and 
 | team-2 | US-13 | team-4 | US-10, US-11 | Microcontroller communication API |
 | team-2 | US-07 | team-3 | US-06 | Validated-reading object (valid / invalid + reason) |
 | team-3 | US-06 | team-4 | US-12 | Dataset storage API and record format |
+| team-3 | US-06 | team-5 | US-15 | Sensor measurement record format |
+| team-2 | US-07 | team-5 | US-15 | How invalid and missing readings are marked |
+| team-4 | US-12 | team-5 | US-15, US-17 | Actuator event record format |
+| team-3 | US-09 | team-5 | US-17 | Retrieval API or export used to load training data |
+
+Team 2, Team 3 and Team 4 review the ML data requirements written in US-15.

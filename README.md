@@ -11,6 +11,7 @@ SmartGreenPolito/
 ├── ai-model/               # AI model, training, and inference code (planned)
 ├── docs/                   # Project and team documentation
 │   ├── admin/              # Notes for tool administrators
+│   ├── backlog/            # Backlog planning: story dependencies and team assignment
 │   └── team-guidelines/    # Team workflow, conventions, and guidelines
 ├── tests/                  # Cross-component and integration tests (planned)
 ├── .gitignore
@@ -50,6 +51,7 @@ Before contributing to SmartGreen, please read the following documents to unders
 Project documentation is maintained in the `docs/` directory.
 
 - `docs/team-guidelines/` — team processes, conventions, and collaboration rules
+- [User Story Dependencies](docs/backlog/user-story-dependencies.md) — Dependency graph of the Sprint 1 user stories and their assignment to the five teams
 - [YouTrack Instances](docs/admin/youtrack-instances.md) — For admins: the five per-team YouTrack servers and how to connect Claude Code to them
 
 ## Contributions
