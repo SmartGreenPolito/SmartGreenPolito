@@ -50,7 +50,7 @@ Every other branch is a short-lived working branch, created from
 |---|---|---|
 | `<type>` | `feature`, `fix`, `docs`, `refactor`, `test`, `chore` | The kind of change (see the table below). |
 | `<team>` | `team-1`, `team-2`, `team-3`, `team-4`, `team-5` | The team that owns the YouTrack task. |
-| `<issue-id>` | e.g. `SG-42` | The YouTrack issue ID, written exactly as it appears in YouTrack. |
+| `<issue-id>` | e.g. `SG-42` | The YouTrack issue ID, written exactly as it appears in the team's YouTrack instance. |
 | `<short-description>` | e.g. `leaf-detection` | 2–5 lowercase English words separated by hyphens. |
 
 | Type | Use it for | Example |
@@ -66,6 +66,9 @@ Naming rules:
 
 -   No task, no branch: find or create the YouTrack issue before
     creating the branch.
+-   Each team has its own YouTrack instance, so the same issue ID can
+    exist in more than one team. The `<team>` part of the branch name
+    tells which instance the ID belongs to.
 -   One branch per task. If the work grows, split the task in YouTrack
     and open a separate branch for the new part.
 -   Use only lowercase letters, digits, and hyphens (the issue ID keeps
@@ -208,6 +211,10 @@ filled in automatically when you open a PR. Every PR should:
 -   Explain what changed and why.
 -   Include the YouTrack issue ID in the title, so that the PR is linked
     to its task (see Section 2).
+-   Link the user story with `Part of #<number>`, where `<number>` is
+    the story's GitHub issue. Never use `Closes`, `Fixes`, or
+    `Resolves` with a story: a story usually needs more than one PR,
+    and the Project Manager closes it after the Sprint Review.
 -   Describe how the change was tested and include relevant results.
 -   Call out known limitations, follow-up work, database or
     configuration changes, and any risks.
