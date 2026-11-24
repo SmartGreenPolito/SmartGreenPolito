@@ -55,6 +55,7 @@ Responsible for **how well the unit works**. Think of a coach, not a boss.
 
 - Facilitates the sprint events
 - Helps the teams remove blockers and coordinates work that involves more than one team
+- Reviews the pull requests that involve more than one team (the teams review their own)
 - Decides when `dev` is released to `main`, and merges the release
 
 ### Teams
@@ -65,7 +66,7 @@ Teams are **self-organizing**: there is no team lead, and nobody assigns individ
 
 - Breaks its user stories into tasks and agrees who owns each task, based on skills, availability, and mutual agreement
 - Decides **how** to do the work
-- Reviews pull requests, including those of other teams when a change affects them
+- Reviews the pull requests of its own members, and those of other teams when a change affects them
 - Raises blockers as soon as they appear
 
 > The Project Manager and the Software Unit Lead are currently the same person. The two roles are described separately because they may be assigned to different people in the future.

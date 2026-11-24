@@ -96,7 +96,9 @@ Naming rules:
    YouTrack issue ID in parentheses, for example
    `feat: add leaf detection model (SG-42)`. YouTrack links the PR to
    the task through the ID in the title.
-5. Have the pull request reviewed and approved by at least one other team member.
+5. Request a review from your own team and have the pull request
+   approved by at least one other member. If the change affects other
+   teams, request their review too (see Section 5).
 6. After all required checks pass, merge the approved pull request into
    `dev` with **Squash and merge**, keeping the PR title as the commit
    message, then delete the branch.
@@ -218,6 +220,23 @@ the required review, except for an explicitly agreed emergency
 procedure.
 
 ## 5. Code Review
+
+### Who reviews
+
+Each team reviews its own work. The Software Unit Lead reviews only
+the PRs that involve more than one team and the releases, so that five
+teams don't wait on one person.
+
+| Pull request | Who reviews and approves |
+|---|---|
+| A change that concerns only one team | Another member of the **same team**. In **Reviewers**, request the whole team (e.g. `SmartGreenPolito/team-2`), so whoever is free can take it. |
+| A change that affects other teams (shared interfaces, data formats, common configuration) | A member of the team that owns the task **and** a member of each affected team. Also request a review from the **Software Unit Lead**. |
+| A release (`dev` → `main`) | Opened by the **Software Unit Lead** and approved by another team member. |
+
+If you are not sure whether a change affects another team, ask that
+team to review it.
+
+### How to review
 
 -   At least one other team member should review a PR before it is
     merged. Repositories may require more reviewers for sensitive or
