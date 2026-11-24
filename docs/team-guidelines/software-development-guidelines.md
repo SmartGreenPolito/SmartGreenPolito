@@ -50,7 +50,7 @@ Every other branch is a short-lived working branch, created from
 |---|---|---|
 | `<type>` | `feature`, `fix`, `docs`, `refactor`, `test`, `chore` | The kind of change (see the table below). |
 | `<team>` | `team-1`, `team-2`, `team-3`, `team-4`, `team-5` | The team that owns the YouTrack task. |
-| `<issue-id>` | e.g. `SG-42` | The YouTrack issue ID, written exactly as it appears in YouTrack. |
+| `<issue-id>` | e.g. `SG-42` | The YouTrack issue ID, written exactly as it appears in the team's YouTrack instance. |
 | `<short-description>` | e.g. `leaf-detection` | 2–5 lowercase English words separated by hyphens. |
 
 | Type | Use it for | Example |
@@ -66,6 +66,9 @@ Naming rules:
 
 -   No task, no branch: find or create the YouTrack issue before
     creating the branch.
+-   Each team has its own YouTrack instance, so the same issue ID can
+    exist in more than one team. The `<team>` part of the branch name
+    tells which instance the ID belongs to.
 -   One branch per task. If the work grows, split the task in YouTrack
     and open a separate branch for the new part.
 -   Use only lowercase letters, digits, and hyphens (the issue ID keeps
@@ -96,7 +99,9 @@ Naming rules:
    YouTrack issue ID in parentheses, for example
    `feat: add leaf detection model (SG-42)`. YouTrack links the PR to
    the task through the ID in the title.
-5. Have the pull request reviewed and approved by at least one other team member.
+5. Request a review from your own team and have the pull request
+   approved by at least one other member. If the change affects other
+   teams, request their review too (see Section 5).
 6. After all required checks pass, merge the approved pull request into
    `dev` with **Squash and merge**, keeping the PR title as the commit
    message, then delete the branch.
@@ -138,6 +143,12 @@ push to them directly. The only exception is the repository
 administrator, who can bypass these rules when needed (for example, to
 update the team documentation directly). If a check fails, open its log
 on the PR: it explains what is wrong and how to fix it.
+
+Every PR also gets the label of its team (`team-1` to `team-5`),
+read from the branch name. To see the open PRs of a team, filter
+the pull requests with `is:pr is:open label:team-2`. The label is
+added by [`.github/workflows/team-labels.yml`](../../.github/workflows/team-labels.yml),
+with the rules in [`.github/labeler.yml`](../../.github/labeler.yml).
 
 The checks are defined in
 [`.github/workflows/branch-flow.yml`](../../.github/workflows/branch-flow.yml).
@@ -200,6 +211,10 @@ filled in automatically when you open a PR. Every PR should:
 -   Explain what changed and why.
 -   Include the YouTrack issue ID in the title, so that the PR is linked
     to its task (see Section 2).
+-   Link the user story with `Part of #<number>`, where `<number>` is
+    the story's GitHub issue. Never use `Closes`, `Fixes`, or
+    `Resolves` with a story: a story usually needs more than one PR,
+    and the Project Manager closes it after the Sprint Review.
 -   Describe how the change was tested and include relevant results.
 -   Call out known limitations, follow-up work, database or
     configuration changes, and any risks.
@@ -212,6 +227,23 @@ the required review, except for an explicitly agreed emergency
 procedure.
 
 ## 5. Code Review
+
+### Who reviews
+
+Each team reviews its own work. The Software Unit Lead reviews only
+the PRs that involve more than one team and the releases, so that five
+teams don't wait on one person.
+
+| Pull request | Who reviews and approves |
+|---|---|
+| A change that concerns only one team | Another member of the **same team**. In **Reviewers**, request the whole team (e.g. `SmartGreenPolito/team-2`), so whoever is free can take it. |
+| A change that affects other teams (shared interfaces, data formats, common configuration) | A member of the team that owns the task **and** a member of each affected team. Also request a review from the **Software Unit Lead**. |
+| A release (`dev` → `main`) | Opened by the **Software Unit Lead** and approved by another team member. |
+
+If you are not sure whether a change affects another team, ask that
+team to review it.
+
+### How to review
 
 -   At least one other team member should review a PR before it is
     merged. Repositories may require more reviewers for sensitive or

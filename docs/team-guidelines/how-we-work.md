@@ -29,7 +29,8 @@ Agile is based on four core values (from the *Agile Manifesto*, 2001):
 ## 2. Our Approach at a Glance
 
 - We work in **four-week sprints**.
-- The **Project Manager** keeps an ordered backlog of user stories in YouTrack.
+- The **Project Manager** keeps a single ordered backlog of user stories on GitHub.
+- Each team tracks its stories and tasks in its **own YouTrack instance**.
 - At the start of each sprint, user stories are assigned to the **five teams** of the software unit. Each team breaks its stories into tasks and decides who does what.
 - Once a week we hold a short **Weekly Sync**. At the end of the sprint we **review** the results and hold a **retrospective** on how we worked.
 - Work counts as finished only when it meets the **Definition of Done**.
@@ -44,7 +45,7 @@ People currently holding each role are listed in the [Onboarding Guide](onboardi
 
 Responsible for **what** the software unit works on and **in which order**.
 
-- Writes the user stories and keeps the backlog ordered by priority in YouTrack
+- Writes the user stories and keeps the backlog ordered by priority on GitHub
 - Assigns user stories to the teams at Sprint Planning
 - Decides whether urgent requests can enter a sprint that has already started
 - Invites members of the research projects to the Sprint Review when the work concerns them
@@ -55,17 +56,18 @@ Responsible for **how well the unit works**. Think of a coach, not a boss.
 
 - Facilitates the sprint events
 - Helps the teams remove blockers and coordinates work that involves more than one team
+- Reviews the pull requests that involve more than one team (the teams review their own)
 - Decides when `dev` is released to `main`, and merges the release
 
 ### Teams
 
-The software unit is divided into five teams: `team-1` to `team-5`. The same codes are used in branch names.
+The software unit is divided into five teams: `team-1` to `team-5`. The same codes are used in branch names. Each team has its own YouTrack instance (listed in [YouTrack Instances](../admin/youtrack-instances.md)).
 
 Teams are **self-organizing**: there is no team lead, and nobody assigns individual tasks from above. Each team:
 
 - Breaks its user stories into tasks and agrees who owns each task, based on skills, availability, and mutual agreement
 - Decides **how** to do the work
-- Reviews pull requests, including those of other teams when a change affects them
+- Reviews the pull requests of its own members, and those of other teams when a change affects them
 - Raises blockers as soon as they appear
 
 > The Project Manager and the Software Unit Lead are currently the same person. The two roles are described separately because they may be assigned to different people in the future.
@@ -89,7 +91,7 @@ All events are **timeboxed**: they have a maximum duration, and we respect it.
 
 1. The Project Manager presents the highest-priority user stories and assigns them to the teams.
 2. Each team checks that its stories are clear and fit its members' availability. If they don't, the team discusses the scope with the Project Manager.
-3. Each team breaks its stories into tasks in YouTrack and agrees who owns each one.
+3. Each team adds its stories to its own YouTrack instance, with the number of the story's GitHub issue, breaks them into tasks, and agrees who owns each one.
 
 **Result:** every task in the sprint has an owner.
 
@@ -109,7 +111,7 @@ The teams **show what they completed** during the sprint, with a live demo whene
 
 The attendees depend on what is being presented. Some reviews involve only the software unit. When the work concerns one of the research projects (for example, a new dataset or a new greenhouse feature), the Project Manager also invites the members of that project who will use it.
 
-The feedback is collected by the Project Manager, who updates the backlog. Unfinished stories go back to the backlog and are prioritized again.
+The feedback is collected by the Project Manager, who updates the backlog and closes the GitHub issues of the accepted stories. Unfinished stories go back to the backlog and are prioritized again.
 
 ### Sprint Retrospective
 
@@ -125,11 +127,14 @@ The unit leaves with 1–3 concrete actions, and checks at the next retrospectiv
 
 ## 5. Backlog, User Stories, and Tasks
 
-Everything is tracked in **YouTrack**.
+Work is tracked in two places:
+
+- **The backlog** lives on **GitHub**, kept by the Project Manager. Each user story is a GitHub issue in this repository, and the issues are ordered on a GitHub Project board. There is one backlog for the whole software unit.
+- **Sprint work** lives in **YouTrack**. Each team has its own instance, with the stories assigned to it and the tasks it creates from them.
 
 ### Backlog
 
-An ordered list of **everything** that could be done: features, improvements, bug fixes, documentation. The most important items are at the top. It is never "finished": it evolves constantly.
+An ordered list of **everything** that could be done: features, improvements, bug fixes, documentation. The most important items are at the top. It is never "finished": it evolves constantly. It is kept on GitHub, not in the teams' YouTrack instances.
 
 The Project Manager writes and orders the backlog. If you have an idea or find a bug, report it to the Project Manager, who decides whether and where it goes in the backlog.
 
@@ -154,7 +159,7 @@ During Sprint Planning, each team breaks its stories into **tasks**. A task:
 - Is small enough to be completed within the sprint, ideally in a few days
 - Corresponds to exactly one Git branch (see the branch naming rules in the [Software Development Guidelines](software-development-guidelines.md#2-branching-strategy))
 
-No task, no branch: if the work you need to do has no task, ask your team to create one in YouTrack first.
+No task, no branch: if the work you need to do has no task, ask your team to create one in its YouTrack instance first.
 
 ---
 
@@ -179,11 +184,12 @@ If a request is truly urgent, the Project Manager decides, together with the tea
 ## 8. How It All Fits Together
 
 ```text
-      Backlog in YouTrack (ordered by the Project Manager)
+      Backlog on GitHub (ordered by the Project Manager)
                  │
                  ▼
       ┌──────── Sprint Planning ─────────┐
       │  stories assigned to the teams   │
+      │  added to each team's YouTrack   │
       │  teams split them into tasks     │
       └──────────┬───────────────────────┘
                  ▼
@@ -212,7 +218,7 @@ You may have heard of **Scrum**, the most popular Agile framework. Our approach 
 |---|---|
 | A **Product Owner** orders the backlog | The **Project Manager** writes and orders the backlog and assigns stories to the teams |
 | A **Scrum Master** facilitates the events and removes impediments | The **Software Unit Lead** has a similar role |
-| One team of up to ~10 people | **Five self-organizing teams** sharing one backlog and one `dev` branch |
+| One team of up to ~10 people | **Five self-organizing teams** sharing one backlog and one `dev` branch, each with its own YouTrack instance |
 | Sprints of 1–4 weeks, often 2 | Sprints of **4 weeks** |
 | **Daily Scrum**, 15 minutes every day | **Weekly Sync**, 30 minutes every week |
 | Each sprint has a **Sprint Goal** | **No Sprint Goal**: progress is measured by the user stories completed |

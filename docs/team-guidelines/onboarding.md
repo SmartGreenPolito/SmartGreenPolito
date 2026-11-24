@@ -48,7 +48,7 @@ By combining a common technological infrastructure with two distinct research pr
 
 ## How the software unit works
 
-The software unit develops and maintains the code in this repository. It is organized into five self-organizing teams (`team-1` to `team-5`) that share the same backlog, the same sprints, and the same integration branch.
+The software unit develops and maintains the code in this repository. It is organized into five self-organizing teams (`team-1` to `team-5`) that share the same backlog, the same sprints, and the same integration branch. The backlog is kept on GitHub by the Project Manager, and each team tracks its sprint work in its own YouTrack instance.
 
 We follow our own Agile approach, inspired by Scrum and adapted to a student team. Work is organized into four-week sprints, each with these events:
 
@@ -76,6 +76,6 @@ The responsibilities of each role are described in [How We Work](how-we-work.md#
 | Tool | Used for |
 |---|---|
 | **Google Meet** | Meetings and sprint events |
-| **YouTrack** | Backlog, user stories, sprints, and task assignment |
-| **GitHub** | Code hosting, version control, pull requests, and code review |
+| **YouTrack** | Each team's sprint work: assigned user stories, tasks, and task owners (one instance per team) |
+| **GitHub** | Code hosting, version control, pull requests, code review, and the backlog of user stories (GitHub issues on a GitHub Project board) |
 | **VS Code** | Writing and editing code |

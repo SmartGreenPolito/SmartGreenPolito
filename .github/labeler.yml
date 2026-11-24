@@ -1,0 +1,22 @@
+# Labels for .github/workflows/team-labels.yml.
+#
+# Each Pull Request gets the label of the team in its branch name:
+#   <type>/<team>/<issue-id>-<short-description>  →  <team>
+# e.g. feature/team-2/SG-42-leaf-detection gets the label team-2.
+#
+# Filter the open Pull Requests of a team with: is:pr is:open label:team-2
+
+team-1:
+  - head-branch: ['^[a-z]+/team-1/']
+
+team-2:
+  - head-branch: ['^[a-z]+/team-2/']
+
+team-3:
+  - head-branch: ['^[a-z]+/team-3/']
+
+team-4:
+  - head-branch: ['^[a-z]+/team-4/']
+
+team-5:
+  - head-branch: ['^[a-z]+/team-5/']

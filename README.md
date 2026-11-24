@@ -6,10 +6,11 @@ SmartGreen is a smart greenhouse project focused on monitoring and supporting gr
 
 ```text
 SmartGreenPolito/
-├── .github/                # Branch flow checks, branch rulesets, PR template
+├── .github/                # Branch flow checks, team labels, branch rulesets, PR template
 ├── greenhouse-controller/  # Hardware, sensors, and actuators (planned)
 ├── ai-model/               # AI model, training, and inference code (planned)
 ├── docs/                   # Project and team documentation
+│   ├── admin/              # Notes for tool administrators
 │   └── team-guidelines/    # Team workflow, conventions, and guidelines
 ├── tests/                  # Cross-component and integration tests (planned)
 ├── .gitignore
@@ -49,6 +50,7 @@ Before contributing to SmartGreen, please read the following documents to unders
 Project documentation is maintained in the `docs/` directory.
 
 - `docs/team-guidelines/` — team processes, conventions, and collaboration rules
+- [YouTrack Instances](docs/admin/youtrack-instances.md) — For admins: the five per-team YouTrack servers and how to connect Claude Code to them
 
 ## Contributions
 
